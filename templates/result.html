@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis</title>
+    <style>
+        body {
+            background-color: #D7F9FF;
+        }
+
+        .p1 {
+            width: 700px;
+            border: 15px solid green;
+            padding: 50px;
+            background-color: #ffff;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="p1" id="p1">
+            <div id="piechart"></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+            <script type="text/javascript">
+                // Load google charts
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
+
+                // Draw the chart and set the chart values
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Polarity', 'Score'],
+                        ['Positive', {{ positive }}],
+                ['Neutral', {{ neutral }}],
+                    ['Negative', {{ negative }}],
+            ]);
+                var options = { 'title': 'Polarity Scores', 'width': 550, 'height': 400 };
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+        }
+            </script>
+
+            <h3>The news sentiment is:</h3><br>
+            The positive polarity score is: {{positive}}<br>
+            The neutral polarity score is: {{neutral}}<br>
+            The negative polarity score is: {{negative}}<br>
+            <br>
+            <b>The aggregate polarity score: {{compound}}</b><br>
+            Our analysis:<b>{{result}}</b><br>
+            <br>
+            <b>The summarized news article is:</b><br>
+            <br>
+            {{summary}}<br>
+
+            <b>Ranked Sentences:</b><br>
+            <br>
+            {% for i,j in rank %}
+            Sentence: {{ j }} <br>
+            Score: {{ i }} <br><br>
+            {% endfor %}
+        </div>
+    </center>
+</body>
+
+</html>
